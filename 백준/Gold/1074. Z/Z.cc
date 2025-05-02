@@ -1,25 +1,19 @@
 #include <iostream>
-
 using namespace std;
 
 int main() {
-
     int N;
     long long r, c;
     cin >> N >> r >> c;
 
-    long long order = 0;
-
-    for (int k = N; k > 0; --k) {
-        long long half = 1LL << (k - 1);
-        int rowBlock = r / half;
-        int colBlock = c / half;
-        int quadrant = rowBlock * 2 + colBlock;
-        order += quadrant * (half * half);
-        r %= half;
-        c %= half;
+    long long ans = 0;
+    for (int i = 0; i < N; i++) {
+        long long rb = (r >> i) & 1LL;
+        long long cb = (c >> i) & 1LL;
+        ans |= (rb << (2 * i + 1));
+        ans |= (cb << (2 * i));
     }
 
-    cout << order;
+    cout << ans;
     return 0;
 }
